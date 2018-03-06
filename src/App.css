@@ -1,28 +1,44 @@
 .App {
-  text-align: center;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 40px auto;
+  grid-template-areas:
+  "header header"
+  "search map";
+  align-content: stretch;
+
+}
+.search {
+  flex-direction: column;
+  display: flex;
+  grid-area: search;
+  background-color: red;
+  width: 100%;
+  overflow-y: auto;
+}
+.search .searchSelect{
+  background-color: white;
+  width: 100%;
+}
+select{
+  width: 100%;
+   height: 2em;
+   text-transform: capitalize;
+ }
+.filteredPlaces .selected{
+  background-color: yellow;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.map{
+  grid-area: map;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.header{
+  grid-area: header;
+  width: 100%;
+  height: 100%;
+  background-color: green;
 }
