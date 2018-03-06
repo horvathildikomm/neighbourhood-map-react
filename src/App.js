@@ -11,17 +11,18 @@ class App extends Component {
     filteredPlaces: places, // List of places matching the current filter
     selectedPlace: null, // The place we want more info on
     selectedPlaceImg: "", // The image URL of the selected place from wikipedia
-    selectedPlaceBounce: false // Sets bouncing of the selected place's marker
+    selectedPlaceBounce: false, // Sets bouncing of the selected place's marker
+    selectedPlaceImgError: false // True if we have an error with Wikipedia API
   };
   // This function handles the change of filtering
   onSelectChange = event => {
     this.setState({
-      selectedPlace: null,
+      selectedPlace: null, // unset selected place if filter changes
       filteredPlaces:
         event.target.value === "all"
           ? places // If the value is all show all places
-          // otherwise show only the places matching the selected category
-          : places.filter(place => place.category === event.target.value)
+          : // otherwise show only the places matching the selected category
+            places.filter(place => place.category === event.target.value)
     });
   };
   // This function selects the place we want more info on
@@ -29,7 +30,8 @@ class App extends Component {
     this.setState({
       selectedPlaceBounce: true, // start bouncing
       selectedPlace: id,
-      selectedPlaceImg: ""
+      selectedPlaceImg: "",
+      selectedPlaceImgError: false,
     });
     // Stop the bouncing of the marker after 1s
     setTimeout(() => this.setState({ selectedPlaceBounce: false }), 1000);
@@ -40,7 +42,13 @@ class App extends Component {
         .page(place.wiki)
         .then(i => i.mainImage()) // Fetch image
         // Set the image url of selected place
-        .then(imgUrl => this.setState({ selectedPlaceImg: imgUrl }));
+        .then(imgUrl =>
+          this.setState({
+            selectedPlaceImg: imgUrl,
+            selectedPlaceImgError: false
+          })
+        )
+        .catch(() => this.setState({ selectedPlaceImgError: true }));
   };
 
   render() {
@@ -53,6 +61,7 @@ class App extends Component {
           setSelectedPlace={this.setSelectedPlace}
           selectedPlace={this.state.selectedPlace}
           filteredPlaces={this.state.filteredPlaces}
+          selectedPlaceImgError={this.state.selectedPlaceImgError}
         />
         <Search
           places={places}
