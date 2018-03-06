@@ -8,35 +8,48 @@ import places from "./places";
 
 class App extends Component {
   state = {
-    filteredPlaces: places,
-    selectedPlace: null,
-    selectedPlaceSummary: ""
+    filteredPlaces: places, // List of places matching the current filter
+    selectedPlace: null, // The place we want more info on
+    selectedPlaceImg: "", // The image URL of the selected place from wikipedia
+    selectedPlaceBounce: false // Sets bouncing of the selected place's marker
   };
+  // This function handles the change of filtering
   onSelectChange = event => {
     this.setState({
       selectedPlace: null,
       filteredPlaces:
         event.target.value === "all"
-          ? places
+          ? places // If the value is all show all places
+          // otherwise show only the places matching the selected category
           : places.filter(place => place.category === event.target.value)
     });
   };
-
+  // This function selects the place we want more info on
   setSelectedPlace = id => {
     this.setState({
+      selectedPlaceBounce: true, // start bouncing
       selectedPlace: id,
-      selectedPlaceSummary: ""
+      selectedPlaceImg: ""
     });
-    const place=places.filter(p=>p.id===id)[0];
-    place && wiki().page(place.wiki)
-    .then(i => i.mainImage()).then(summary => this.setState({selectedPlaceSummary:summary}))
+    // Stop the bouncing of the marker after 1s
+    setTimeout(() => this.setState({ selectedPlaceBounce: false }), 1000);
+    // Get the place with matching id to fetch image from wikipedia
+    const place = places.filter(p => p.id === id)[0];
+    place &&
+      wiki()
+        .page(place.wiki)
+        .then(i => i.mainImage()) // Fetch image
+        // Set the image url of selected place
+        .then(imgUrl => this.setState({ selectedPlaceImg: imgUrl }));
   };
 
   render() {
-      return (
+    // Layout is handled with css grid
+    return (
       <div className="App">
         <Map
-          selectedPlaceSummary={this.state.selectedPlaceSummary}
+          selectedPlaceBounce={this.state.selectedPlaceBounce}
+          selectedPlaceImg={this.state.selectedPlaceImg}
           setSelectedPlace={this.setSelectedPlace}
           selectedPlace={this.state.selectedPlace}
           filteredPlaces={this.state.filteredPlaces}

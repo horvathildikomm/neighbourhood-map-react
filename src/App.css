@@ -42,3 +42,23 @@ select{
   height: 100%;
   background-color: green;
 }
+.infoWindow{
+  width: 300px;
+}
+.infoWindowImg{
+  max-width: 100%!important;
+  max-height: 100%!important;
+}
+.mapContainer{
+  height: 100%;
+}
+@media screen and (max-width: 600px) {
+  .App{
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 400px auto;
+    grid-template-areas:
+    "header"
+    "map"
+    "search";
+  }
+}
