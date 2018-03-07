@@ -1,10 +1,26 @@
 import React, { Component } from "react";
-import wiki from "wikijs";
 import "./App.css";
 import Map from "./Map";
 import Search from "./Search";
 import Header from "./Header";
 import places from "./places";
+// This function fetches a 400px wide thumbnail link for a place
+const fetchWikiThumbnail = name =>
+// Fetch the correct name for the place
+  fetch(
+    `https://en.wikipedia.org/w/api.php?action=opensearch&search=${name}&limit=1&namespace=0&format=json&origin=*`
+  )
+    .then(res => res.json()) // Get body data
+    .then(res => encodeURI(res[0])) // Get the name of the first found page and encode it
+    .then(uri => // Fetch thumbnail
+      fetch(
+        `http://en.wikipedia.org/w/api.php?action=query&titles=${uri}&prop=pageimages&format=json&pithumbsize=400&origin=*`
+      )
+    )
+    .then(res => res.json()) // Get body data
+    .then(data => data.query.pages) // Get result pages
+    // Get the thumbnail of the first page result
+    .then(pages => pages[Object.keys(pages)[0]].thumbnail.source);
 
 class App extends Component {
   state = {
@@ -31,17 +47,14 @@ class App extends Component {
       selectedPlaceBounce: true, // start bouncing
       selectedPlace: id,
       selectedPlaceImg: "",
-      selectedPlaceImgError: false,
+      selectedPlaceImgError: false
     });
     // Stop the bouncing of the marker after 1s
     setTimeout(() => this.setState({ selectedPlaceBounce: false }), 1000);
     // Get the place with matching id to fetch image from wikipedia
     const place = places.filter(p => p.id === id)[0];
     place &&
-      wiki()
-        .page(place.wiki)
-        .then(i => i.mainImage()) // Fetch image
-        // Set the image url of selected place
+      fetchWikiThumbnail(place.wiki)
         .then(imgUrl =>
           this.setState({
             selectedPlaceImg: imgUrl,
@@ -71,8 +84,6 @@ class App extends Component {
           filteredPlaces={this.state.filteredPlaces}
           selectedPlaceImgError={this.state.selectedPlaceImgError}
         />
-
-
       </div>
     );
   }

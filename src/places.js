@@ -2,7 +2,7 @@ export default [
   {
     id: 0,
     name: "Müpa Budapest",
-    wiki: "Palace of Arts",
+    wiki: "Müpa Budapest",
     position: [47.469454, 19.071838],
     category: "theater"
   },

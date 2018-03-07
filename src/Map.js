@@ -39,7 +39,9 @@ const MapWithAMarker = withScriptjs(
                   <div className="infoWindow">
                     <h2>{place.name}</h2>
                     {selectedPlaceImgError ? (
-                      <p className="imageError">Error: Image can not be loaded</p>
+                      <p className="imageError">
+                        Error: Image can not be loaded
+                      </p>
                     ) : (
                       <img
                         className="infoWindowImg"
