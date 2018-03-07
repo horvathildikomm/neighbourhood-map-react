@@ -29,7 +29,7 @@ class Search extends Component {
         {/* Create a list of places with the selected category, set selected place when clicked*/}
         <div className="filteredPlaces">
           {filteredPlaces.map(place => (
-            <div
+            <div tabIndex="0"
               key={place.id}
               className={
                 place.id === selectedPlace
