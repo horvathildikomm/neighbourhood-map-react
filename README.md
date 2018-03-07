@@ -5,3 +5,7 @@ It is a map of different places in Budapest shown on a Google map, with addition
 
 ## How to start the app
 Run `yarn install` or `npm install` to install dependencies, after that you can start server with `yarn start` or `npm run start` which also opens up the page in your default browser, or you can go to [localhost:3000].
+
+## Service workers / production build
+Create-react-app has a built in offline caching functionality, but the service worker which provides that only works with a production build.
+To test the offline functionality first build the application with `yarn build` or `npm run build` then serve the build directory with `yarn serve` or `npm run serve`. You can visit the production page on [localhost:5000].

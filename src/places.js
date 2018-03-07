@@ -14,6 +14,13 @@ export default [
     category: "theater"
   },
   {
+    id: 2,
+    name: "Matthias Church",
+    wiki: "Matthias Church",
+    position: [47.501945, 19.03414],
+    category: "temple"
+  },
+  {
     id: 3,
     name: "St. Stephen's Basilica",
     wiki: "St. Stephen's Basilica",
@@ -46,6 +53,13 @@ export default [
     name: "Hungarian State Opera House",
     wiki: "Hungarian State Opera House",
     position: [47.502681, 19.058147],
+    category: "theater"
+  },
+  {
+    id: 8,
+    name: "Franz Liszt Academy of Music",
+    wiki: "Franz Liszt Academy of Music",
+    position: [47.503212, 19.064517],
     category: "theater"
   }
 ];

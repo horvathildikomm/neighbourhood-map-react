@@ -6,13 +6,15 @@ import Header from "./Header";
 import places from "./places";
 // This function fetches a 400px wide thumbnail link for a place
 const fetchWikiThumbnail = name =>
-// Fetch the correct name for the place
+  // Fetch the correct name for the place
   fetch(
     `https://en.wikipedia.org/w/api.php?action=opensearch&search=${name}&limit=1&namespace=0&format=json&origin=*`
   )
     .then(res => res.json()) // Get body data
     .then(res => encodeURI(res[0])) // Get the name of the first found page and encode it
-    .then(uri => // Fetch thumbnail
+    .then((
+      uri // Fetch thumbnail
+    ) =>
       fetch(
         `http://en.wikipedia.org/w/api.php?action=query&titles=${uri}&prop=pageimages&format=json&pithumbsize=400&origin=*`
       )
