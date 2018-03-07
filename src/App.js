@@ -55,6 +55,14 @@ class App extends Component {
     // Layout is handled with css grid
     return (
       <div className="App">
+        <Header />
+        <Search
+          places={places}
+          filteredPlaces={this.state.filteredPlaces}
+          onSelectChange={this.onSelectChange}
+          setSelectedPlace={this.setSelectedPlace}
+          selectedPlace={this.state.selectedPlace}
+        />
         <Map
           selectedPlaceBounce={this.state.selectedPlaceBounce}
           selectedPlaceImg={this.state.selectedPlaceImg}
@@ -63,14 +71,8 @@ class App extends Component {
           filteredPlaces={this.state.filteredPlaces}
           selectedPlaceImgError={this.state.selectedPlaceImgError}
         />
-        <Search
-          places={places}
-          filteredPlaces={this.state.filteredPlaces}
-          onSelectChange={this.onSelectChange}
-          setSelectedPlace={this.setSelectedPlace}
-          selectedPlace={this.state.selectedPlace}
-        />
-        <Header />
+
+
       </div>
     );
   }
