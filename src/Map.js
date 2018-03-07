@@ -1,5 +1,4 @@
 import React from "react";
-import wiki from "wikijs";
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,7 +6,6 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
-import places from "./places";
 // This file creates and exports a map component
 // Docs: https://tomchentw.github.io/react-google-maps
 const MapWithAMarker = withScriptjs(
@@ -67,7 +65,7 @@ const Map = ({
   selectedPlaceBounce,
   selectedPlaceImgError
 }) => (
-  <div className="map">
+  <div role="application" className="map">
     <MapWithAMarker
       selectedPlaceBounce={selectedPlaceBounce}
       selectedPlaceImg={selectedPlaceImg}
