@@ -27,9 +27,11 @@ class Search extends Component {
           </select>
         </div>
         {/* Create a list of places with the selected category, set selected place when clicked*/}
-        <div className="filteredPlaces">
+        <div className="filteredPlaces" role="list">
           {filteredPlaces.map(place => (
-            <div tabIndex="0"
+            <div
+              role="listitem"
+              tabIndex="0"
               key={place.id}
               className={
                 place.id === selectedPlace
@@ -37,6 +39,9 @@ class Search extends Component {
                   : "filteredPlace"
               }
               onClick={() => setSelectedPlace(place.id)}
+              onKeyPress={event =>
+                event.key === "Enter" && setSelectedPlace(place.id)
+              }
             >
               {place.name}
             </div>

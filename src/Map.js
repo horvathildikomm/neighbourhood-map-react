@@ -39,7 +39,7 @@ const MapWithAMarker = withScriptjs(
                   <div className="infoWindow">
                     <h2>{place.name}</h2>
                     {selectedPlaceImgError ? (
-                      <p className="imageError">
+                      <p className="error">
                         Error: Image can not be loaded
                       </p>
                     ) : (
@@ -59,7 +59,7 @@ const MapWithAMarker = withScriptjs(
   )
 );
 // This is a container component for our map
-const Map = ({
+const MapContainer = ({
   setSelectedPlace,
   selectedPlace,
   filteredPlaces,
@@ -82,4 +82,21 @@ const Map = ({
     />
   </div>
 );
+// This Component is an error handling wrapper for google maps
+class Map extends React.Component {
+  // hasError will be true if there was a rendering error.
+  state = { hasError: false };
+  // This method will be called if there was an error in rendering.
+  componentDidCatch() {
+    this.setState({ hasError: true });
+  }
+  // If we have an error display an error message, otherwise render the map
+  render() {
+    return this.state.hasError ? (
+      <p className="error">Error: Can access google maps</p>
+    ) : (
+      <MapContainer {...this.props} />
+    );
+  }
+}
 export default Map;

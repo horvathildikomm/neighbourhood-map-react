@@ -82,7 +82,7 @@ select{
 .mapContainer{
   height: 100%;
 }
-.imageError{
+.error{
   color: red;
   font-weight: bold;
 }
